@@ -8,7 +8,7 @@ const Footer = () => {
                     <header className="footer-title">Teachings</header>
                     <a className="link link-hover">Summer Courses</a>
                     <a className="link link-hover">Diploma Certificate</a>
-                    <a className="link link-hover">Huge Comunity</a>
+                    <a className="link link-hover">Comunity</a>
                     <a className="link link-hover">Active Platform</a>
                 </nav>
                 <nav>
@@ -26,13 +26,13 @@ const Footer = () => {
                 </nav>
                 <form>
                     <header className="footer-title">Newsletter</header>
-                    <fieldset className="form-control w-80">
+                    <fieldset className="form-control">
                         <label className="label">
                             <span className="text-white">Enter your email address</span>
                         </label>
-                        <div className="join">
-                            <input required type="text" placeholder="jonhFk@mail.com" className="input input-bordered join-item" />
-                            <button className="btn btn-primary join-item">Subscribe</button>
+                        <div>
+                            <input required type="text" placeholder="jonhFk@mail.com" className="input input-bordered" /><br />
+                            <button className="deafultButton mt-3">Subscribe</button>
                         </div>
                     </fieldset>
                 </form>
