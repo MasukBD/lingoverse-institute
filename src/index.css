@@ -14,3 +14,7 @@
 .default {
     @apply font-bold px-2 text-lg text-white hover:text-blue-800
 }
+
+.different-font-style {
+    font-family: 'Merriweather', serif;
+}
