@@ -19,10 +19,10 @@ const Footer = () => {
                     <a className="link link-hover">Press kit</a>
                 </nav>
                 <nav>
-                    <header className="footer-title">Legal</header>
-                    <a className="link link-hover">Terms of use</a>
-                    <a className="link link-hover">Privacy policy</a>
-                    <a className="link link-hover">Cookie policy</a>
+                    <header className="footer-title">Contact Us</header>
+                    <p>123 Kazi Nazrul Ave, Agargaon, Dhaka</p>
+                    <p>Phone: +88017XXXXXXXX</p>
+                    <p>Email: support@lingoverse.com</p>
                 </nav>
                 <form>
                     <header className="footer-title">Newsletter</header>

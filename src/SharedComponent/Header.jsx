@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import image from '../assets/logo/lingoVerselogo1.png';
 import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const Header = () => {
+
+    const { user } = useContext(AuthContext);
+
     return (
         <div className='bg-gradient-to-r from-[#000000] to-[#2c29d4] sticky z-10 top-0'>
             <div className="navbar px-2 md:w-11/12 mx-auto">
