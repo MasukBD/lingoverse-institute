@@ -3,24 +3,57 @@ import ParitclesJs from '../Particles/ParitclesJs';
 import { Helmet } from 'react-helmet-async';
 import facebookImage from '../../assets/icons/facebook.png';
 import googleImage from '../../assets/icons/google.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../Provider/AuthProvider';
 import axios from 'axios';
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const Login = () => {
     const [error, setError] = useState('');
     const [showSocial, setShowSocial] = useState(true);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const { googleLogIn, facebookLogIn, loginWithEmailPassword, passwordReset } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+    let from = location.state?.from?.pathname || "/";
 
 
     const onSubmit = async (data) => {
-
+        loginWithEmailPassword(data.email, data.password)
+            .then((result) => {
+                const loggedUser = result.user;
+                toast.success(`${loggedUser.displayName} login successfully!`)
+                setError('');
+                navigate(from, { replace: true });
+            })
+            .catch(error => {
+                setError(error.message);
+            })
     };
 
-    const handleForgetPassword = () => {
-
+    const handleForgetPassword = async () => {
+        const { value: email } = await Swal.fire({
+            title: "Input valid email address",
+            input: "email",
+            inputLabel: "Your email address",
+            inputPlaceholder: "Enter your email address"
+        });
+        if (email) {
+            passwordReset(email)
+                .then(() => {
+                    Swal.fire({
+                        title: "Passowd Reset Email Sent!",
+                        text: `Check ${email}`,
+                        icon: "success"
+                    });
+                    setError('');
+                })
+                .catch(error => {
+                    setError(error.message);
+                })
+        }
     };
 
     const handleGoogleLogin = () => {
@@ -28,9 +61,12 @@ const Login = () => {
             .then(result => {
                 const loggedUser = result.user;
                 const user = { name: loggedUser?.displayName, email: loggedUser.email, role: 'user' };
+                toast.success(`${loggedUser?.displayName} Sign in Successfull!`);
+                setError('');
+                navigate(from, { replace: true });
                 axios.post('http://localhost:5000/users', user)
-                    .then(response => {
-                        console.log(response)
+                    .then(() => {
+                        // if the user sign in before with same account then this http call will not response
                     })
             })
             .catch(error => {
@@ -39,7 +75,21 @@ const Login = () => {
     };
 
     const handleFacebookLogin = () => {
-
+        facebookLogIn()
+            .then(result => {
+                const loggedUser = result.user;
+                toast.success(`${loggedUser.displayName} Sign in Successfull!`);
+                setError('');
+                navigate(from, { replace: true });
+                const user = { name: loggedUser?.displayName, email: loggedUser.email, role: 'user' };
+                axios.post('http://localhost:5000/users', user)
+                    .then(() => {
+                        // if the user sign in before with same account then this http call will not response
+                    })
+            })
+            .catch(error => {
+                setError(error.code);
+            })
     };
 
     return (
@@ -82,7 +132,7 @@ const Login = () => {
                         </>
                 }
                 {
-                    error && <p className='my-2 font-semibold text-red-500'>{error}</p>
+                    error && <p className='my-2 text-center font-semibold text-red-500'>{error}</p>
                 }
                 <p className='font-semibold mb-16'>No Account Yet? <Link to='/register'><button className='text-blue-600 underline'>Register</button></Link></p>
                 <p className='text-base-400 mt-10 lg:mt-12 text-center'>By logging in to LingoVerse, you agree to our <Link><span className='text-blue-400 underline'>terms & Conditions</span></Link></p>

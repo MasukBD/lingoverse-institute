@@ -1,21 +1,60 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import ParitclesJs from '../Particles/ParitclesJs';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { AuthContext } from '../../Provider/AuthProvider';
+import { sendEmailVerification, updateProfile } from 'firebase/auth';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 
 const SignUp = () => {
     const [manualError, setManualError] = useState('');
     const { register, handleSubmit, reset, formState: { errors }, watch } = useForm();
+    const { creatingUserWithEmail } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     // Toggle show and hide password 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const onSubmit = async (data) => {
-
+        const email = data.email;
+        const password = data.password;
+        const dispalyPhoto = data.photoUrl;
+        const userToDb = { name: data.name ? data.name : 'Anonymous', email: email, role: 'user' };
+        creatingUserWithEmail(email, password)
+            .then(result => {
+                const newUser = result.user;
+                updateProfile(newUser, { displayName: data.name ? data.name : 'Anonymous', photoURL: dispalyPhoto && dispalyPhoto })
+                axios.post('http://localhost:5000/users', userToDb)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            sendEmailVerification(newUser)
+                                .then(() => {
+                                    Swal.fire({
+                                        title: "Sign Up Completed!",
+                                        text: "A Verification Email sent to your Email!",
+                                        icon: "success"
+                                    });
+                                    reset();
+                                    setManualError('');
+                                    navigate('/');
+                                })
+                                .catch(error => {
+                                    setManualError(error.message);
+                                })
+                        }
+                    })
+                    .catch(error => {
+                        setManualError(error.message);
+                    })
+            })
+            .catch(error => {
+                setManualError(error.message);
+            })
     }
 
     return (
@@ -28,7 +67,7 @@ const SignUp = () => {
                     <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
                         <div>
                             <label className='font-semibold'>Name</label><br />
-                            <input {...register("name", { maxLength: 30 })} placeholder='Enter Your name' className='w-full border p-2 rounded-md' type="text" id="name" />
+                            <input {...register("name", { maxLength: 40 })} placeholder='Enter Your name' className='w-full border p-2 rounded-md' type="text" id="name" />
                             {errors.name?.type === 'maxLength' && <span className='text-sm text-red-500'>Name character exceeds limit!</span>}
                         </div>
                         <div>
@@ -75,9 +114,11 @@ const SignUp = () => {
                         </div>
                     </form>
                 </div>
-
+                {
+                    manualError && <p className='my-2 text-center font-semibold text-red-500'>{manualError}</p>
+                }
                 <p className='font-semibold mb-16'>Already have an Account? <Link to='/login'><button className='text-blue-600 underline'>Login</button></Link></p>
-                <p className='text-base-400 mt-10 lg:mt-12 text-center'>By logging in to LingoVerse, you agree to our <Link><span className='text-blue-400 underline'>terms & Conditions</span></Link></p>
+                <p className='text-base-400 mt-10 lg:mt-12 text-center'>By signingUp in to LingoVerse, you agree to our <Link><span className='text-blue-400 underline'>terms & Conditions</span></Link></p>
             </div>
         </>
     );

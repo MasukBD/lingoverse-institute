@@ -24,11 +24,11 @@ import { FaArrowRight } from "react-icons/fa";
 const AfterBanner = () => {
     return (
         <div className='my-10'>
-            <SectionTitle heading={'Curriculum Content'} subHeading={'Comprehensive Educational Syllabus'}></SectionTitle>
-            <div className='p-2 grid grid-cols-1 lg:grid-cols-2 w-full lg:w-11/12 mx-auto gap-7 space-y-2'>
+            <SectionTitle heading={'Curriculum Content'} subHeading={'Comprehensive Curriculum Syllabus'}></SectionTitle>
+            <div className='px-2 grid grid-cols-1 lg:grid-cols-2 w-full lg:w-11/12 mx-auto gap-7 space-y-2'>
                 <div>
                     <h1 className='text-2xl md:text-3xl lg:text-4xl font-bold'>Celebrating Unity in <span className='text-blue-500'>Diversity</span>, Embracing and Sharing Multilingual and Cultural Riches!</h1>
-                    <p className='text-2xl font-semibold'>
+                    <p className='text-xl md:text-2xl font-semibold'>
                         <span>Learn Here </span>
                         <span style={{ fontFamily: 'Domine' }} className='text-pink-500'>
                             <Typewriter cursorBlinking cursor loop words={['German Language', 'English Language', 'Spanish Language', 'Chinese Language', 'Korean Language', 'Bangla Language', 'Arabic Language', 'French Language', 'Russian Language']}></Typewriter>
