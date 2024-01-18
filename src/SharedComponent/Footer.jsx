@@ -1,4 +1,5 @@
 import React from 'react';
+import { HiLocationMarker, HiPhone, HiMail } from "react-icons/hi";
 
 const Footer = () => {
     return (
@@ -20,9 +21,9 @@ const Footer = () => {
                 </nav>
                 <nav>
                     <header className="footer-title">Contact Us</header>
-                    <p>123 Kazi Nazrul Ave, Agargaon, Dhaka</p>
-                    <p>Phone: +88017XXXXXXXX</p>
-                    <p>Email: support@lingoverse.com</p>
+                    <p className='flex gap-1 items-center'><HiLocationMarker></HiLocationMarker> 123 Kazi Nazrul Ave, Agargaon, Dhaka</p>
+                    <p className='flex gap-1 items-center'><HiPhone></HiPhone> Phone: +8801272028183</p>
+                    <p className='flex gap-1 items-center'><HiMail></HiMail> Email: support@lingoverse.com</p>
                 </nav>
                 <form>
                     <header className="footer-title">Newsletter</header>

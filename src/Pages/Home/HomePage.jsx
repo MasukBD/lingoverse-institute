@@ -7,8 +7,14 @@ import ContactUs from './HomeComponents/ContactUs';
 import FeaturedCourse from './HomeComponents/FeaturedCourse';
 import FeaturedMentors from './HomeComponents/FeaturedMentors';
 import CampusOverview from './HomeComponents/CampusOverview';
+import useCourses from '../../Hooks/useCourses';
+import { Puff } from 'react-loader-spinner';
 
 const HomePage = () => {
+    const { loading } = useCourses();
+    if (loading) {
+        return <div className='h-screen flex items-center justify-center'><Puff visible={true} height="80" width="80" color="#050582" ariaLabel="puff-loading" wrapperStyle={{}} wrapperClass="" /></div>
+    }
     return (
         <>
             <Helmet><title>Home - LingoVerse - institute</title></Helmet>
