@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-const ImageDetailsOnHover = ({ image, heading, details }) => {
+const CampusImageDetailsOnHover = ({ image, heading, details }) => {
     return (
         <div className='relative overflow-hidden hover:shadow-2xl transition duration-300 transform hover:scale-105 hover:cursor-pointer'>
             <img src={image} alt="" />
@@ -13,4 +12,4 @@ const ImageDetailsOnHover = ({ image, heading, details }) => {
     );
 };
 
-export default ImageDetailsOnHover;
+export default CampusImageDetailsOnHover;

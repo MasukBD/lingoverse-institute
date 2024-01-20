@@ -7,6 +7,10 @@ import Mentors from "../Pages/Mentors/Mentors";
 import AboutUs from "../Pages/About Us/AboutUs";
 import Login from "../Components/AuthComponents/Login";
 import SignUp from "../Components/AuthComponents/SignUp";
+import Dashboard from "../Layout/Dashboard";
+import PrivateRoute from "./PrivateRoute";
+import UserHomepage from "../Pages/UserDashboard/UserHomepage";
+import SelectedCourse from "../Pages/UserDashboard/SelectedCourse";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +44,22 @@ const router = createBrowserRouter([
             }
         ]
     },
+    {
+        path: '/dashboard',
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+        errorElement: <ErrorPage></ErrorPage>,
+        children: [
+            {
+                path: '/dashboard/userHome',
+                element: <PrivateRoute><UserHomepage></UserHomepage></PrivateRoute>
+            },
+            {
+                path: '/dashboard/cartItem',
+                element: <PrivateRoute><SelectedCourse></SelectedCourse></PrivateRoute>
+            }
+        ]
+
+    }
 ]);
 
 export default router;

@@ -8,7 +8,6 @@ import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 
 const Header = () => {
-
     const { user, logOut } = useContext(AuthContext);
 
     const handleLogout = () => {
@@ -49,7 +48,7 @@ const Header = () => {
                             {
                                 user && <>
                                     <li title={user?.displayName}>{user.photoURL ? <img className='w-12 p-2 rounded-full' src={user?.photoURL} alt="" /> : <FaUserCircle className='text-3xl'></FaUserCircle>}</li>
-                                    <li className='default'><Link>Dashboard</Link></li>
+                                    <li className='default'><Link to={'/dashboard/UserHome'}>Dashboard</Link></li>
                                 </>
                             }
                             {
@@ -71,7 +70,7 @@ const Header = () => {
                                         <label className='cursor-pointer' tabIndex={0} title={user.displayName}>{user?.photoURL ? <img className='rounded-full w-10' src={user?.photoURL} alt="display Photo" /> : <FaUserCircle className="text-3xl"></FaUserCircle>}</label>
                                     }
                                     <ul className="bg-blue-600 mt-4 bg-opacity-80 dropdown-content p-2 z-10 shadow rounded">
-                                        <li className='default'><Link>Dashboard</Link></li>
+                                        <li className='default'><Link to={'/dashboard/UserHome'}>Dashboard</Link></li>
                                         <li className='default'><button onClick={handleLogout} className='flex gap-0.5 items-center'><FaSignInAlt></FaSignInAlt> Log&nbsp;Out</button></li>
                                     </ul>
                                 </li>

@@ -8,11 +8,11 @@
 }
 
 .active {
-    @apply font-bold px-2 !text-blue-600 text-lg
+    @apply font-bold px-2 !text-blue-600 text-lg flex items-center gap-1
 }
 
 .default {
-    @apply font-bold px-2 text-lg text-white hover:text-blue-800
+    @apply font-bold px-2 text-lg text-white hover:text-blue-800 flex items-center gap-1
 }
 
 .different-font-style {

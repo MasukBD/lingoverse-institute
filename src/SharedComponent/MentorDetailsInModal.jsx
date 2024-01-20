@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MentorDetailsCard = () => {
+const MentorDetailsInModal = () => {
     return (
         <div>
 
@@ -8,4 +8,4 @@ const MentorDetailsCard = () => {
     );
 };
 
-export default MentorDetailsCard;
+export default MentorDetailsInModal;
