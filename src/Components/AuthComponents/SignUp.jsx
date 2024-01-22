@@ -8,6 +8,7 @@ import { AuthContext } from '../../Provider/AuthProvider';
 import { sendEmailVerification, updateProfile } from 'firebase/auth';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import useAxiosCall from '../../Hooks/useAxiosCall';
 
 
 const SignUp = () => {
@@ -15,6 +16,7 @@ const SignUp = () => {
     const { register, handleSubmit, reset, formState: { errors }, watch } = useForm();
     const { creatingUserWithEmail } = useContext(AuthContext);
     const navigate = useNavigate();
+    const axiosCall = useAxiosCall();
 
     // Toggle show and hide password 
     const [showPassword, setShowPassword] = useState(false);
@@ -29,7 +31,7 @@ const SignUp = () => {
             .then(result => {
                 const newUser = result.user;
                 updateProfile(newUser, { displayName: data.name ? data.name : 'Anonymous', photoURL: dispalyPhoto && dispalyPhoto })
-                axios.post('http://localhost:5000/users', userToDb)
+                axiosCall.post('/users', userToDb)
                     .then(res => {
                         if (res.data.insertedId) {
                             sendEmailVerification(newUser)

@@ -57,7 +57,7 @@ const Dashboard = () => {
             </div>
             <div className="drawer-side">
                 <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu p-4 w-48 min-h-full text-white bg-blue-950">
+                <ul className="menu px-4 pt-16 w-48 min-h-full text-white bg-blue-950">
                     {/* Sidebar content here */}
                     {navItem}
                 </ul>

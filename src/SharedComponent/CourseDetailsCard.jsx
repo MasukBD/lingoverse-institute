@@ -1,6 +1,7 @@
 import React from 'react';
+import { HashLink } from 'react-router-hash-link';
 
-const CourseDetailsCard = ({ course }) => {
+const CourseDetailsCard = ({ course, handleEnrollButton }) => {
     const { _id, course_name, mentor_name, available_seats, course_fee, image, details } = course;
     return (
         <div id={_id} className='border-2 border-blue-600 mb-5 rounded-xl grid grid-cols-1 md:grid-cols-7 lg:grid-cols-6 gap-5 overflow-hidden'>
@@ -9,7 +10,7 @@ const CourseDetailsCard = ({ course }) => {
             </div>
             <div className='md:col-span-4 lg:col-span-3 p-2'>
                 <h1 className='text-2xl font-bold text-pink-500'>{course_name}</h1>
-                <p className='font-semibold'>Instructor: {mentor_name}</p>
+                <p className='font-semibold'>Instructor: <HashLink smooth to={`/mentors#${mentor_name}`}><span className='text-blue-800 hover:underline hover:cursor-pointer'>{mentor_name}</span></HashLink></p>
                 <h5 className='font-semibold'>Remaining Seats: <span className='text-pink-500'>{available_seats}</span></h5>
                 <p><b>Description:</b> {details}</p>
                 <div className='flex justify-between items-center flex-col md:flex-row gap-3 my-2'>
@@ -18,7 +19,7 @@ const CourseDetailsCard = ({ course }) => {
                 </div>
             </div>
             <div className='p-2 flex justify-center items-center'>
-                <button className='deafultButton'>Enroll Course</button>
+                <button disabled={available_seats === 0} onClick={() => handleEnrollButton(course)} className='deafultButton'>Enroll Course</button>
             </div>
         </div>
     );

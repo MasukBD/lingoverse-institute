@@ -9,11 +9,13 @@ import { AuthContext } from '../../Provider/AuthProvider';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
+import useAxiosCall from '../../Hooks/useAxiosCall';
 
 const Login = () => {
     const [error, setError] = useState('');
     const [showSocial, setShowSocial] = useState(true);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const axiosCall = useAxiosCall();
     const { googleLogIn, facebookLogIn, loginWithEmailPassword, passwordReset } = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
@@ -64,7 +66,7 @@ const Login = () => {
                 toast.success(`${loggedUser?.displayName} Sign in Successfull!`);
                 setError('');
                 navigate(from, { replace: true });
-                axios.post('http://localhost:5000/users', user)
+                axiosCall.post('/users', user)
                     .then(() => {
                         // if the user sign in before with same account then this http call will not response
                     })
@@ -82,7 +84,7 @@ const Login = () => {
                 setError('');
                 navigate(from, { replace: true });
                 const user = { name: loggedUser?.displayName, email: loggedUser.email, role: 'user' };
-                axios.post('http://localhost:5000/users', user)
+                axiosCall.post('/users', user)
                     .then(() => {
                         // if the user sign in before with same account then this http call will not response
                     })

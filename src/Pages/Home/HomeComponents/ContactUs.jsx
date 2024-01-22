@@ -6,11 +6,13 @@ import PhoneInput from 'react-phone-number-input';
 import '../HomeComponents/styles/style.css';
 import { isPossiblePhoneNumber } from 'react-phone-number-input';
 import toast from 'react-hot-toast';
+import useAxiosCall from '../../../Hooks/useAxiosCall';
 
 const ContactUs = () => {
     const [error, setError] = useState('');
     const { user } = useContext(AuthContext);
     const [value, setValue] = useState();
+    const axiosCall = useAxiosCall();
 
     const handleMessageSubmit = event => {
         event.preventDefault();
@@ -23,16 +25,9 @@ const ContactUs = () => {
         const email = from.email.value;
         const texts = from.message.value;
         const message = { name, email, phone: value, messageText: texts };
-        fetch('http://localhost:5000/messages', {
-            method: "POST",
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(message)
-        })
-            .then(res => res.json())
+        axiosCall.post('/messages', message)
             .then(data => {
-                if (data.insertedId) {
+                if (data.data.insertedId) {
                     from.reset();
                     toast.success('Thanks for your feedback!');
                     setError('');
