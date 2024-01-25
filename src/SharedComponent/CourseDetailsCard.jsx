@@ -1,8 +1,14 @@
 import React from 'react';
 import { HashLink } from 'react-router-hash-link';
+import useCart from '../Hooks/useCart';
 
 const CourseDetailsCard = ({ course, handleEnrollButton }) => {
     const { _id, course_name, mentor_name, available_seats, course_fee, image, details } = course;
+
+    const [cart] = useCart();
+    const cartItem = cart.find(item => item.courseName === course_name);
+
+
     return (
         <div id={_id} className='border-2 border-blue-600 mb-5 rounded-xl grid grid-cols-1 md:grid-cols-7 lg:grid-cols-6 gap-5 overflow-hidden'>
             <div className='md:col-span-2 lg:col-span-2'>
@@ -19,7 +25,7 @@ const CourseDetailsCard = ({ course, handleEnrollButton }) => {
                 </div>
             </div>
             <div className='p-2 flex justify-center items-center'>
-                <button disabled={available_seats === 0} onClick={() => handleEnrollButton(course)} className='deafultButton'>Enroll Course</button>
+                <button disabled={available_seats === 0 || cartItem} onClick={() => handleEnrollButton(course)} className='deafultButton'>{cartItem ? 'Enrolled' : 'Enroll Course'}</button>
             </div>
         </div>
     );

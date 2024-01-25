@@ -11,6 +11,7 @@ import Dashboard from "../Layout/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import UserHomepage from "../Pages/UserDashboard/UserHomepage";
 import SelectedCourse from "../Pages/UserDashboard/SelectedCourse";
+import PaymentPage from "../Pages/UserDashboard/PaymentPage";
 
 const router = createBrowserRouter([
     {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/cartItem',
                 element: <PrivateRoute><SelectedCourse></SelectedCourse></PrivateRoute>
+            },
+            {
+                path: '/dashboard/payment',
+                element: <PrivateRoute><PaymentPage></PaymentPage></PrivateRoute>
             }
         ]
 

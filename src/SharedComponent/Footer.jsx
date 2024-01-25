@@ -38,8 +38,8 @@ const Footer = () => {
                     </fieldset>
                 </form>
             </footer>
-            <hr className='mx-10 text-white' />
-            <p className='text-white text-center font-semibold pt-2'>© All Right Reserved To LingoVerse! MD ILIUS MAHFUZ 2023</p>
+            <hr className='md:mx-10 text-white' />
+            <p className='text-white text-center font-semibold p-2'>© All Right Reserved To LingoVerse! MD ILIUS MAHFUZ 2023</p>
         </div>
     );
 };

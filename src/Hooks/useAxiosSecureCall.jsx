@@ -15,7 +15,7 @@ const useAxiosSecureCall = () => {
 
     useEffect(() => {
         // Secure Request 
-        axios.interceptors.request.use((config) => {
+        axiosSecuredCall.interceptors.request.use((config) => {
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`
                 return config;
@@ -25,7 +25,7 @@ const useAxiosSecureCall = () => {
                 throw error;
             });
         //Sequre Response
-        axios.interceptors.response.use((response) => {
+        axiosSecuredCall.interceptors.response.use((response) => {
             return response;
         },
             async (error) => {

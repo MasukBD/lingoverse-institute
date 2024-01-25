@@ -32,7 +32,7 @@ const Dashboard = () => {
     return (
         <div className="drawer">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content">
+            <div className="drawer-content overflow-x-auto">
                 {/* Navbar */}
                 <div className="w-full navbar text-white bg-gradient-to-r from-[#000000] to-[#0e0c74] flex justify-between px-6 md:px-14">
                     <div className=""><Link to='/'><img className='w-1/2 lg:w-2/5' src={logo} alt="" /></Link></div>

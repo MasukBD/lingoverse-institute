@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { AuthContext } from '../../Provider/AuthProvider';
+import useGetRegisteredStudent from '../../Hooks/useGetRegisteredStudent';
 
 const UserHomepage = () => {
     const { user } = useContext(AuthContext);
+    const [registeredStudentData, refetch, isLoading] = useGetRegisteredStudent();
+    console.log(registeredStudentData);
     return (
         <>
             <Helmet><title>User Dashboard - LingoVerse</title></Helmet>

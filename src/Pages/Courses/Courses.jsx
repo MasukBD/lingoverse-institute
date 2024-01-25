@@ -9,6 +9,10 @@ import { AuthContext } from '../../Provider/AuthProvider';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PhoneInput from 'react-phone-number-input';
 import { CountryDropdown } from 'react-country-region-selector';
+import { isPossiblePhoneNumber } from 'react-phone-number-input';
+import useAxiosSecureCall from '../../Hooks/useAxiosSecureCall';
+import Swal from 'sweetalert2';
+import useGetRegisteredStudent from '../../Hooks/useGetRegisteredStudent';
 
 
 const Courses = () => {
@@ -20,13 +24,78 @@ const Courses = () => {
     const [value, setValue] = useState();
     const [country, setCountry] = useState('');
     const [error, setError] = useState('');
+    const axiosSecuredCall = useAxiosSecureCall();
+    const [selectedCourse, setSelectedCourse] = useState(null);
+    const [registeredStudentData] = useGetRegisteredStudent();
 
+    // SweetAlert Variable 
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
 
     const handleEnrollment = course => {
         if (!user) {
             return navigate('/login', { state: { from: location } })
         }
-        document.getElementById('register_modal').showModal();
+        else if (!registeredStudentData) {
+            setSelectedCourse(course);
+            document.getElementById('register_modal').showModal();
+            return;
+        }
+        axiosSecuredCall.post('/courseCart', { courseName: course.course_name, courseId: course._id, courseFees: course.course_fee, mentor: course.mentor_name, studentEmail: registeredStudentData.email, phone: registeredStudentData.phoneNo })
+            .then(res => {
+                if (res.data.insertedId) {
+                    Toast.fire({
+                        icon: "success",
+                        title: "Course Added Cart!"
+                    });
+                    navigate('/dashboard/cartItem');
+                }
+            })
+    }
+
+    const handleStudentRegistration = event => {
+        if (!country) {
+            event.preventDefault();
+            setError('Please Select A Country!');
+            return;
+        }
+        else if (!isPossiblePhoneNumber(String(value))) {
+            event.preventDefault();
+            setError('Phone Number is Required!');
+            return;
+        }
+        const form = event.target;
+        const fullName = form.name.value;
+        const email = form.email.value;
+        const passport = form.passport.value;
+        const address = form.address.value;
+        const registrationData = { fullName, email, nationallity: country, passportNo: passport, phoneNo: value, address };
+        axiosSecuredCall.post('/register', registrationData)
+            .then(res => {
+                if (res.data.insertedId) {
+                    setError('');
+                    axiosSecuredCall.post('/courseCart', { courseName: selectedCourse.course_name, courseId: selectedCourse._id, courseFees: selectedCourse.course_fee, mentor: selectedCourse.mentor_name, studentEmail: email, phone: value })
+                        .then(data => {
+                            if (data.data.insertedId) {
+                                Toast.fire({
+                                    icon: "success",
+                                    title: "Course Added Cart!"
+                                });
+                                navigate('/dashboard/cartItem');
+                            }
+                        })
+                }
+            })
+
     }
 
     if (loading) {
@@ -47,14 +116,14 @@ const Courses = () => {
                     <h3 className="font-bold text-center text-2xl text-blue-700">Complete Profile!</h3>
                     <p className="py-1 text-center">This Info will be Recorded as your Course Registration Data!</p>
                     <div className="modal-action">
-                        <form className='w-full p-2 space-y-2' method="dialog">
+                        <form onSubmit={handleStudentRegistration} className='w-full p-2 space-y-2' method="dialog">
                             <div>
                                 <label className='font-semibold'>Full Name<span className='text-red-500'>*</span></label>
                                 <input required type="text" name="name" id="name" placeholder='Enter Full Name' className='p-2 w-full border-2 rounded-lg' />
                             </div>
                             <div>
                                 <label className='font-semibold'>Course Email<span className='text-red-500'>*</span></label>
-                                <input required defaultValue={user?.email} type="email" name="emial" id="emial" placeholder='Enter your emial' className='p-2 w-full border-2 rounded-lg' />
+                                <input readOnly required defaultValue={user?.email} type="email" name="email" id="email" placeholder='Enter your Email' className='p-2 w-full border-2 rounded-lg' />
                             </div>
                             <div>
                                 <label className='font-semibold'>Phone <span className='text-red-500'>*</span></label><br />
@@ -66,6 +135,9 @@ const Courses = () => {
                                     className='phoneInput'
                                     onChange={setValue} />
                             </div>
+                            {
+                                error && <span className='text-red-500 font-semibold text-sm'>{error}</span>
+                            }
                             <div className='flex flex-col gap-5 md:flex-row'>
                                 <div className='w-full md:w-1/2'>
                                     <label className='font-semibold'>Nationality <span className='text-red-500'>*</span></label>
