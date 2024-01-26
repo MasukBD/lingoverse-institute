@@ -9,6 +9,7 @@ import FeaturedMentors from './HomeComponents/FeaturedMentors';
 import CampusOverview from './HomeComponents/CampusOverview';
 import useCourses from '../../Hooks/useCourses';
 import { Puff } from 'react-loader-spinner';
+import AwesomeRevel from '../../Components/CustomAnimation/AwesomeRevel';
 
 const HomePage = () => {
     const { loading } = useCourses();
@@ -19,12 +20,14 @@ const HomePage = () => {
         <>
             <Helmet><title>Home - LingoVerse - institute</title></Helmet>
             <Banner></Banner>
-            <AfterBanner></AfterBanner>
-            <FeaturedCourse></FeaturedCourse>
-            <FeaturedMentors></FeaturedMentors>
-            <CampusOverview></CampusOverview>
-            <ContactUs></ContactUs>
-            <Faq></Faq>
+            <AwesomeRevel>
+                <AfterBanner></AfterBanner>
+                <FeaturedCourse></FeaturedCourse>
+                <FeaturedMentors></FeaturedMentors>
+                <CampusOverview></CampusOverview>
+                <ContactUs></ContactUs>
+                <Faq></Faq>
+            </AwesomeRevel>
         </>
     );
 };

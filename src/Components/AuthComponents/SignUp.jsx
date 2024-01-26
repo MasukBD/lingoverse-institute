@@ -68,7 +68,7 @@ const SignUp = () => {
                 <div className='mb-10 w-full rounded-lg bg-blue-200 p-3'>
                     <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
                         <div>
-                            <label className='font-semibold'>Name</label><br />
+                            <label className='font-semibold'>User Name</label><br />
                             <input {...register("name", { maxLength: 40 })} placeholder='Enter Your name' className='w-full border p-2 rounded-md' type="text" id="name" />
                             {errors.name?.type === 'maxLength' && <span className='text-sm text-red-500'>Name character exceeds limit!</span>}
                         </div>

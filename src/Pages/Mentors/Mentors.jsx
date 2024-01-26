@@ -5,6 +5,7 @@ import { Puff } from 'react-loader-spinner';
 import mentorsimg from '../../assets/campus/mentors.jpg';
 import SectionCover from '../../SharedComponent/SectionCover';
 import MentorCard from '../../SharedComponent/MentorCard';
+import AwesomeRevel from '../../Components/CustomAnimation/AwesomeRevel';
 
 const Mentors = () => {
     const { mentors, mentorLoading } = useMentors();
@@ -24,9 +25,11 @@ const Mentors = () => {
             <Helmet><title>Mentors - LingoVerse - Institute</title></Helmet>
             <SectionCover image={mentorsimg} heading={'Meet Our Inspirational Mentors'} subHeading={'Welcome to our Mentors Page, where expertise meets inspiration! Our dedicated team of mentors is committed to guiding you on your educational journey and helping you reach your full potential. Meet the exceptional individuals who bring a wealth of experience, passion, and mentorship to our learning community.'}></SectionCover>
             <div className='w-full my-5 lg:w-11/12 mx-auto p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12'>
-                {
-                    mentors.map(mentor => <MentorCard key={mentor._id} handlDetails={handleShowDetails} mentor={mentor}></MentorCard>)
-                }
+                <AwesomeRevel>
+                    {
+                        mentors.map(mentor => <MentorCard key={mentor._id} handlDetails={handleShowDetails} mentor={mentor}></MentorCard>)
+                    }
+                </AwesomeRevel>
             </div>
             {/* Mentor Details Modal Here  */}
             <dialog id="my_modal" className="modal">

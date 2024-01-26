@@ -8,7 +8,6 @@ import { HashLink } from 'react-router-hash-link';
 import useAxiosSecureCall from '../../Hooks/useAxiosSecureCall';
 import Swal from 'sweetalert2';
 
-
 const SelectedCourse = () => {
     const [cart, refetch, cartLoading] = useCart();
     const axiosSecuredCall = useAxiosSecureCall();
@@ -40,7 +39,7 @@ const SelectedCourse = () => {
     }
     return (
         <>
-            <SectionTitle heading={'Your Selected Classes'} subHeading={'Just One Step Furture'}></SectionTitle>
+            <SectionTitle heading={'Your Next Journey'} subHeading={'Learn New Language and Build Better Future Toghter'}></SectionTitle>
             {
                 cartLoading && <div className='h-screen flex items-center justify-center'><Puff visible={true} height="80" width="80" color="#050582" ariaLabel="puff-loading" wrapperStyle={{}} wrapperClass="" /></div>
             }
@@ -67,7 +66,16 @@ const SelectedCourse = () => {
                                         <td>$ <span className='text-pink-600'>{item.courseFees}</span></td>
                                         <td className='hover:underline hover:text-blue-500'><HashLink to={`/mentors#${item.mentor}`}>{item.mentor}</HashLink></td>
                                         <td title='Delete'><button onClick={() => handleCartItemDelete(item._id)}><FaTrashAlt className='text-5xl hover:bg-red-500 bg-opacity-60 p-3 hover:rounded-full hover:text-white'></FaTrashAlt></button></td>
-                                        <td className='text-center'><Link to='/dashboard/payment'><button className='deafultButton'>Pay</button></Link></td>
+                                        <td className='text-center'>
+                                            <Link state={{
+                                                cartId: item._id,
+                                                courseId: item.courseId,
+                                                price: item.courseFees,
+                                                course: item.courseName,
+                                                mentor: item.mentor,
+                                            }}
+                                                to='/dashboard/payment'
+                                            ><button className='deafultButton'>Pay</button></Link></td>
                                     </tr>)
                                 }
                             </tbody>

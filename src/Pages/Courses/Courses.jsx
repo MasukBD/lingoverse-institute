@@ -13,6 +13,7 @@ import { isPossiblePhoneNumber } from 'react-phone-number-input';
 import useAxiosSecureCall from '../../Hooks/useAxiosSecureCall';
 import Swal from 'sweetalert2';
 import useGetRegisteredStudent from '../../Hooks/useGetRegisteredStudent';
+import AwesomeRevel from '../../Components/CustomAnimation/AwesomeRevel';
 
 
 const Courses = () => {
@@ -107,9 +108,11 @@ const Courses = () => {
             <SectionCover heading={'All COURSES'} subHeading={'Embark on a linguistic adventure with us and open doors to new connections, travel experiences, and personal growth. Join our multicultural community of learners and start your language learning journey today!'} image={bgPhoto}></SectionCover>
             <div className='w-full md:w-11/12 mx-auto p-2'>
                 <p className='flex items-center font-semibold mb-4'><span className='p-1.5 rounded-md text-white bg-red-500'>Notice</span> <marquee><span className='text-red-500'>March Intake 2024 Enrollment is going Now! Deadline for Registration is 23<sup>rd</sup> February. Thank You!</span></marquee></p>
-                {
-                    sortedCourses.map(course => <CourseDetailsCard course={course} key={course._id} handleEnrollButton={handleEnrollment}></CourseDetailsCard>)
-                }
+                <AwesomeRevel>
+                    {
+                        sortedCourses.map(course => <CourseDetailsCard course={course} key={course._id} handleEnrollButton={handleEnrollment}></CourseDetailsCard>)
+                    }
+                </AwesomeRevel>
             </div>
             <dialog id="register_modal" className="modal">
                 <div className="modal-box w-11/12 max-w-2xl">
