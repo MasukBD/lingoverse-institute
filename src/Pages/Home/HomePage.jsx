@@ -20,12 +20,14 @@ const HomePage = () => {
         <>
             <Helmet><title>Home - LingoVerse - institute</title></Helmet>
             <Banner></Banner>
+            <AfterBanner></AfterBanner>
             <AwesomeRevel>
-                <AfterBanner></AfterBanner>
                 <FeaturedCourse></FeaturedCourse>
                 <FeaturedMentors></FeaturedMentors>
                 <CampusOverview></CampusOverview>
-                <ContactUs></ContactUs>
+            </AwesomeRevel>
+            <ContactUs></ContactUs>
+            <AwesomeRevel>
                 <Faq></Faq>
             </AwesomeRevel>
         </>

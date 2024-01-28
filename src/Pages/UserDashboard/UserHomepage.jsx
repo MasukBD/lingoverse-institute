@@ -7,12 +7,59 @@ import { FaEdit } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Puff } from 'react-loader-spinner';
 import EnrolledCourseCard from '../../SharedComponent/EnrolledCourseCard';
+import useAxiosSecureCall from '../../Hooks/useAxiosSecureCall';
+import Swal from 'sweetalert2';
 
 const UserHomepage = () => {
     const { user } = useContext(AuthContext);
     const [registeredStudentData, refetch, isLoading] = useGetRegisteredStudent();
     const [enrollData, enrollRefetch, enrollDataLoading] = useEnrollStudentData();
     const [disableForm, setDisableForm] = useState(true);
+    const axiosSecuredCall = useAxiosSecureCall();
+
+
+    const handleUpdateStudentRegisterData = event => {
+        event.preventDefault();
+        const from = event.target;
+        const fullName = from.name.value;
+        const phone = from.phone.value;
+        const nationality = from.nationality.value;
+        const address = from.address.value;
+        const passport = from.passport.value;
+        const updatedRegisterData = { fullName, phone, nationality, address, passport };
+        axiosSecuredCall.put(`/register/${registeredStudentData._id}`, updatedRegisterData)
+            .then(res => {
+                if (res.data.modifiedCount) {
+                    refetch();
+                    setDisableForm(true);
+                    // Sweet Alert Starts Here 
+                    let timerInterval;
+                    Swal.fire({
+                        title: "Registered Data Updating!",
+                        html: "Update Will Finish <b></b> milliseconds.",
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            Swal.showLoading();
+                            const timer = Swal.getPopup().querySelector("b");
+                            timerInterval = setInterval(() => {
+                                timer.textContent = `${Swal.getTimerLeft()}`;
+                            }, 100);
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval);
+                        }
+                    }).then((result) => {
+                        /* Read more about handling dismissals below */
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            // Alert Shown Successfully!
+                        }
+                    });
+                    // Sweet Alert Ends Here 
+                }
+            })
+    }
+
 
     if (isLoading || enrollDataLoading) {
         return <div className='h-screen flex items-center justify-center'><Puff visible={true} height="80" width="80" color="#050582" ariaLabel="puff-loading" wrapperStyle={{}} wrapperClass="" /></div>
@@ -40,14 +87,14 @@ const UserHomepage = () => {
                         <p className='lg:text-sm mt-1 hover:text-blue-600 mb-3 flex justify-center'><button onClick={() => setDisableForm(!disableForm)} className='hover:underline flex gap-0.5 items-center '>{disableForm ? <>Update Data <FaEdit></FaEdit></> : 'Back To Previous'}</button></p>
                     </div>
                     <div className='border-2 rounded-lg p-2'>
-                        <form className='space-y-2'>
+                        <form onSubmit={handleUpdateStudentRegisterData} className='space-y-2'>
                             <div>
                                 <label className='font-semibold'>Full Name<span className='text-red-500'>*</span></label>
                                 <input disabled={disableForm} defaultValue={registeredStudentData?.fullName} required type="text" name="name" id="name" placeholder='Enter Full Name' className='p-2 w-full border-2 rounded-lg' />
                             </div>
                             <div>
                                 <label className='font-semibold'>Course Email<span className='text-red-500'>*</span></label>
-                                <input disabled={disableForm} defaultValue={user?.email} type="email" name="email" id="email" placeholder='Enter your Email' className='p-2 w-full border-2 rounded-lg' />
+                                <input disabled defaultValue={user?.email} type="email" name="email" id="email" placeholder='Enter your Email' className='p-2 w-full border-2 rounded-lg' />
                             </div>
                             <div>
                                 <label className='font-semibold'>Nationality<span className='text-red-500'>*</span></label>

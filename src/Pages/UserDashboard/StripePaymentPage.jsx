@@ -126,7 +126,7 @@ const StripePaymentPage = ({ cartDetails }) => {
             {
                 showError && <p className='font-semibold text-red-500 my-1'>{showError}</p>
             }
-            <p className='text-center mt-7'><button className='deafultButton w-1/5' type="submit" disabled={!stripe || !clientSecret || laoder}>{laoder ? 'Processing.' : 'Pay'}</button></p>
+            <p className='text-center mt-7'><button className='deafultButton w-1/3 md:w-1/5' type="submit" disabled={!stripe || !clientSecret || laoder}>{laoder ? 'Processing.' : 'Pay'}</button></p>
         </form>
     );
 };
