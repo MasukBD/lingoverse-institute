@@ -1,19 +1,21 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
-import { Puff } from 'react-loader-spinner';
+import useUserRole from '../Hooks/useUserRole';
 import { Navigate, useLocation } from 'react-router-dom';
+import { Puff } from 'react-loader-spinner';
 
-const PrivateRoute = ({ children }) => {
+const AdminRoute = ({ children }) => {
     const { user, loading } = useContext(AuthContext);
-    let location = useLocation();
-    if (loading) {
+    const { userRole, userRoleLoading } = useUserRole();
+    const location = useLocation();
+    if (loading || userRoleLoading) {
         return <div className='h-screen flex items-center justify-center'><Puff visible={true} height="80" width="80" color="#050582" ariaLabel="puff-loading" wrapperStyle={{}} wrapperClass="" /></div>
     }
-    if (user) {
+    if (user && userRole === 'admin') {
         return children;
     }
-    return <Navigate to='/login' state={{ from: location }} replace></Navigate>
+    return <Navigate to='/login' state={{ from: location }}></Navigate>
 
 };
 
-export default PrivateRoute;
+export default AdminRoute;

@@ -42,6 +42,7 @@ const Courses = () => {
         }
     });
 
+    // If an user Already Registered Then enrollment button directly hit here 
     const handleEnrollment = course => {
         if (!user) {
             return navigate('/login', { state: { from: location } })
@@ -63,6 +64,7 @@ const Courses = () => {
             })
     }
 
+    // If the User is not Registered As Registered Student then Open A Modal then Hit here and registered the used and Enrolled 
     const handleStudentRegistration = event => {
         if (!country) {
             event.preventDefault();

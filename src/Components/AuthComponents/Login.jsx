@@ -6,7 +6,6 @@ import googleImage from '../../assets/icons/google.png';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../Provider/AuthProvider';
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import useAxiosCall from '../../Hooks/useAxiosCall';
@@ -28,6 +27,7 @@ const Login = () => {
                 const loggedUser = result.user;
                 toast.success(`${loggedUser.displayName} login successfully!`)
                 setError('');
+                reset();
                 navigate(from, { replace: true });
             })
             .catch(error => {

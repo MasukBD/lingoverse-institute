@@ -12,6 +12,13 @@ import PrivateRoute from "./PrivateRoute";
 import UserHomepage from "../Pages/UserDashboard/UserHomepage";
 import SelectedCourse from "../Pages/UserDashboard/SelectedCourse";
 import PaymentPage from "../Pages/UserDashboard/PaymentPage";
+import AdminRoute from "./AdminRoute";
+import ManageAllClasses from "../Pages/AdminDashboard/ManageAllClasses";
+import ManageAllUsers from "../Pages/AdminDashboard/ManageAllUsers";
+import MentorRoute from "./MentorRoute";
+import MentorHome from "../Pages/MentorDashboard/MentorHome";
+import MyClasses from "../Pages/MentorDashboard/MyClasses";
+import AddAClass from "../Pages/MentorDashboard/AddAClass";
 
 const router = createBrowserRouter([
     {
@@ -50,6 +57,26 @@ const router = createBrowserRouter([
         element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
         errorElement: <ErrorPage></ErrorPage>,
         children: [
+            {
+                path: '/dashboard/manageCourses',
+                element: <AdminRoute><ManageAllClasses></ManageAllClasses></AdminRoute>
+            },
+            {
+                path: '/dashboard/manageUsers',
+                element: <AdminRoute><ManageAllUsers></ManageAllUsers></AdminRoute>
+            },
+            {
+                path: '/dashboard/mentorHome',
+                element: <MentorRoute><MentorHome></MentorHome></MentorRoute>
+            },
+            {
+                path: '/dashboard/myClasses',
+                element: <MentorRoute><MyClasses></MyClasses></MentorRoute>
+            },
+            {
+                path: '/dashboard/addAClass',
+                element: <MentorRoute><AddAClass></AddAClass></MentorRoute>
+            },
             {
                 path: '/dashboard/userHome',
                 element: <PrivateRoute><UserHomepage></UserHomepage></PrivateRoute>

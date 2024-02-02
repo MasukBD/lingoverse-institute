@@ -1,11 +1,11 @@
 import React from 'react';
 
-const MentorHome = () => {
+const MyClasses = () => {
     return (
         <div>
-            mentor home
+            mentor classes
         </div>
     );
 };
 
-export default MentorHome;
+export default MyClasses;

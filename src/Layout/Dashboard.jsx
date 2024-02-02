@@ -2,17 +2,22 @@ import React, { useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo/lingoVerselogo1.png';
 import { Link } from 'react-router-dom';
-import { HiHome, HiLogout } from "react-icons/hi";
+import { HiAcademicCap, HiBookOpen, HiHome, HiLogout, HiUsers } from "react-icons/hi";
 import { AuthContext } from '../Provider/AuthProvider';
 import toast from 'react-hot-toast';
 import Footer from '../SharedComponent/Footer';
 import { NavLink } from 'react-router-dom';
 import { FaCartArrowDown } from "react-icons/fa";
 import ScrollToTop from '../SharedComponent/ScrollToTop';
+import useUserRole from '../Hooks/useUserRole';
+import { Puff } from 'react-loader-spinner';
 
 const Dashboard = () => {
     const { logOut } = useContext(AuthContext);
     const navigate = useNavigate();
+    const { userRole, userRoleLoading } = useUserRole();
+    let navItem;
+
 
     const handleLogout = () => {
         logOut()
@@ -24,11 +29,35 @@ const Dashboard = () => {
                 toast.error(error.message);
             })
     }
-    const navItem = <>
-        <li><NavLink to="/dashboard/userHome" className={({ isActive }) => (isActive ? 'active' : 'default')}><HiHome /> User Home</NavLink></li>
-        <li><NavLink to="/dashboard/cartItem" className={({ isActive }) => (isActive ? 'active' : 'default')}><FaCartArrowDown /> Courses Cart</NavLink></li>
-        <li><button onClick={handleLogout} className='default flex gap-1 items-center'><HiLogout></HiLogout> LogOut</button></li>
-    </>
+
+    const logOutButton = <li><button onClick={handleLogout} className='default flex gap-1 items-center'><HiLogout></HiLogout> LogOut</button></li>
+
+    if (userRole === 'admin') {
+        navItem = <>
+            <li><NavLink to="/dashboard/manageCourses" className={({ isActive }) => (isActive ? 'active' : 'default')}><HiHome />Admin Home</NavLink></li>
+            <li><NavLink to="/dashboard/manageUsers" className={({ isActive }) => (isActive ? 'active' : 'default')}><HiUsers /> All Users</NavLink></li>
+            {logOutButton}
+        </>
+    } else if (userRole === 'mentor') {
+        navItem = <>
+            <li><NavLink to="/dashboard/mentorHome" className={({ isActive }) => (isActive ? 'active' : 'default')}><HiHome /> Mentor Home</NavLink></li>
+            <li><NavLink to="/dashboard/myClasses" className={({ isActive }) => (isActive ? 'active' : 'default')}><HiBookOpen /> My Classes</NavLink></li>
+            <li><NavLink to="/dashboard/addAClass" className={({ isActive }) => (isActive ? 'active' : 'default')}><HiAcademicCap /> Add&nbsp;A&nbsp;Class</NavLink></li>
+            {logOutButton}
+        </>
+    }
+    else {
+        navItem = <>
+            <li><NavLink to="/dashboard/userHome" className={({ isActive }) => (isActive ? 'active' : 'default')}><HiHome /> User Home</NavLink></li>
+            <li><NavLink to="/dashboard/cartItem" className={({ isActive }) => (isActive ? 'active' : 'default')}><FaCartArrowDown /> Courses Cart</NavLink></li>
+            {logOutButton}
+        </>
+    }
+
+    if (userRoleLoading) {
+        return <div className='h-screen flex items-center justify-center'><Puff visible={true} height="80" width="80" color="#050582" ariaLabel="puff-loading" wrapperStyle={{}} wrapperClass="" /></div>
+    }
+
     return (
         <div className="drawer">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
