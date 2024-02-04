@@ -9,7 +9,7 @@ const useAxiosSecureCall = () => {
     const token = localStorage.getItem('access-token');
 
     const axiosSecuredCall = axios.create({
-        baseURL: 'http://localhost:5000',
+        baseURL: 'https://lingoverse-server.vercel.app',
         timeout: 5000
     })
 

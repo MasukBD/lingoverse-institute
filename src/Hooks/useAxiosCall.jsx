@@ -3,7 +3,7 @@ import axios from 'axios';
 const useAxiosCall = () => {
 
     const axiosCall = axios.create({
-        baseURL: 'http://localhost:5000',
+        baseURL: 'https://lingoverse-server.vercel.app',
         timeout: 7000
     })
 

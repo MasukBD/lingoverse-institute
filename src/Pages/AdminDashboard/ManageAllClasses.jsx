@@ -4,10 +4,10 @@ import useCourses from '../../Hooks/useCourses';
 import { Puff } from 'react-loader-spinner';
 import AwesomeRevel from '../../Components/CustomAnimation/AwesomeRevel';
 import CourseDetailsCardForAdmin from './CourseDetailsCardForAdmin';
-import { useQuery } from '@tanstack/react-query';
 import useAxiosSecureCall from '../../Hooks/useAxiosSecureCall';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
+import usePendingCorse from '../../Hooks/usePendingCorse';
 const imageHostingApiKey = import.meta.env.VITE_IMAGE_HOST_KEY_BY_BB;
 const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${imageHostingApiKey}`;
 
@@ -17,15 +17,8 @@ const ManageAllClasses = () => {
     const { courses, courseRefetch, loading } = useCourses();
     const axiosSecuredCall = useAxiosSecureCall();
     const [selectForUpdate, setSelectForUpdate] = useState(null);
-
     // Retriving Pending Course Data 
-    const { data: pendingCourse = [], refetch: pendingRefech, isLoading: pendingLoading } = useQuery({
-        queryKey: ['pendingCourse'],
-        queryFn: async () => {
-            const response = await axiosSecuredCall.get('/pendingCourse')
-            return response.data;
-        }
-    })
+    const { pendingCourse, pendingRefech, pendingLoading } = usePendingCorse();
 
     // Update Button Event Handler 
     const handleUpdateCourse = course => {
