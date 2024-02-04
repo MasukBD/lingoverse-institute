@@ -14,6 +14,7 @@ LingoVerse Institute is a dynamic web application designed to facilitate foreign
    - [Courses](#courses)
    - [Payment](#payment)
    - [User Dashboard](#user-dashboard)
+   - [Mentor Dashboard](#mentor-dashboard)
    - [Mentors](#mentors)
    - [Admin Dashboard](#admin-dashboard)
 3. [Getting Started](#getting-started)
@@ -66,6 +67,12 @@ LingoVerse Institute provides multiple authentication options for users:
 - View and update login information.
 - Manage student registration details.
 - Access enrolled courses with transaction history.
+
+### Mentor Dashboard
+
+- Mentor Home: Update or upload public profile.
+- Add A Class: Create and publish new language learning classes.
+- See My Class: View and manage existing courses, including pending and published ones.
 
 ### Mentors
 
