@@ -32,13 +32,13 @@ const Dashboard = () => {
 
     const logOutButton = <li><button onClick={handleLogout} className='default flex gap-1 items-center'><HiLogout></HiLogout> LogOut</button></li>
 
-    if (userRole === 'admin' && !userRoleLoading) {
+    if (userRole === 'admin') {
         navItem = <>
             <li><NavLink to="/dashboard/manageCourses" className={({ isActive }) => (isActive ? 'active' : 'default')}><HiHome />Admin Home</NavLink></li>
             <li><NavLink to="/dashboard/manageUsers" className={({ isActive }) => (isActive ? 'active' : 'default')}><HiUsers /> All Users</NavLink></li>
             {logOutButton}
         </>
-    } else if (userRole === 'mentor' && !userRoleLoading) {
+    } else if (userRole === 'mentor') {
         navItem = <>
             <li><NavLink to="/dashboard/mentorHome" className={({ isActive }) => (isActive ? 'active' : 'default')}><HiHome /> Mentor Home</NavLink></li>
             <li><NavLink to="/dashboard/myClasses" className={({ isActive }) => (isActive ? 'active' : 'default')}><HiBookOpen /> My Classes</NavLink></li>
